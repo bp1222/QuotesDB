@@ -1,0 +1,9 @@
+<h1>Add a new Quote</h1>
+
+<%= bootstrap_form_for (@quote) do |f| %>
+    <%= f.text_field :attributed %>
+    <%= f.text_field :author %>
+    <%= f.text_area :quote %>
+    
+    <%= render "layouts/form_submits", f: f %>
+<% end %>

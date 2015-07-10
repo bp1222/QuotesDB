@@ -1,0 +1,19 @@
+<h1>Quotes</h1>
+
+<% if @quotes.count > 0 then %>
+  <ul>
+    <% @quotes.each do |quote| %>
+      <li>
+        <%= quote.quote %>
+        <%= quote.attributed %>
+        <%= quote.author %>
+        <%= quote.vote %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  There are no quotes yet<br/>
+<% end %>
+
+
+<%= link_to 'New Quote', :new_quote, {:class => 'btn btn-primary'} %>

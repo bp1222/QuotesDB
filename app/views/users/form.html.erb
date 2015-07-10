@@ -1,0 +1,9 @@
+<h1><%= @header %></h1>
+
+<%= bootstrap_form_for(@user) do |f| %>
+    <%= f.text_field :name %>
+    <%= f.text_field :username %>
+    <%= f.password_field :password %>
+
+    <%= render "layouts/form_submits", path: users_path, f: f %>
+<% end %>

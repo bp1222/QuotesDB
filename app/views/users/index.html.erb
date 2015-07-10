@@ -1,0 +1,30 @@
+<h1>Users</h1>
+
+<%= paginate @users %>
+
+<% if @users.count > 0 then %>
+  <% @users.each_slice(2) do |users| %>
+    <div class='row'>
+      <% users.each do |user| %>
+        <div class='col-lg-6'>
+          <div class='panel panel-primary'>
+            <div class='panel-heading'>
+              <h3 class='panel-title'><%= user.name %></h3>
+            </div>
+            <div class='panel-body'>
+              Username: <%= user.username %>
+            </div>
+            <div class='panel-footer'>
+              <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-default' %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <larger>There are no users yet</larger><br/>
+<% end %>
+
+
+<%= link_to 'New User', new_user_path, :class => 'btn btn-primary' %>
