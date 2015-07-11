@@ -16,6 +16,7 @@
             </div>
             <div class='panel-footer'>
               <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-default' %>
+              <%= link_to 'Delete', user, :method => 'delete', :class => 'btn btn-danger', data: {confirm: "You will delete this record.  Are you sure?"} %>
             </div>
           </div>
         </div>

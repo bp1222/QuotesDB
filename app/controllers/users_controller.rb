@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create user_params
-    redirect_to edit_user_path(@user)
+    redirect_to users_path, {flash: {success: "Record has been created"}}
   end
 
   def edit
@@ -27,6 +27,11 @@ class UsersController < ApplicationController
     else
       render 'form'
     end
+  end
+
+  def destroy
+    User.destroy params[:id]
+    redirect_to users_path, {flash: {notice: "Record has been deleted"}}
   end
 
   private
