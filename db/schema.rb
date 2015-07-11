@@ -11,16 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710175106) do
+ActiveRecord::Schema.define(version: 20150711010849) do
 
   create_table "quotes", force: :cascade do |t|
     t.text     "quote"
-    t.string   "attributed"
-    t.string   "author"
+    t.integer  "attributed"
+    t.integer  "author"
     t.integer  "vote"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "attributed_id"
+    t.integer  "author_id"
   end
+
+  add_index "quotes", ["attributed_id"], name: "index_quotes_on_attributed_id"
+  add_index "quotes", ["author_id"], name: "index_quotes_on_author_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

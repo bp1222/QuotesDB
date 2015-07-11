@@ -1,19 +1,33 @@
 <h1>Quotes</h1>
 
+<%= paginate @quotes %>
+
 <% if @quotes.count > 0 then %>
-  <ul>
-    <% @quotes.each do |quote| %>
-      <li>
-        <%= quote.quote %>
-        <%= quote.attributed %>
-        <%= quote.author %>
-        <%= quote.vote %>
-      </li>
+  <% @quotes.each_slice(2) do |quotes| %>
+    <div class='row'>
+      <% quotes.each do |quote| %>
+        <div class='col-lg-6'>
+          <div class='panel panel-primary'>
+            <div class='panel-heading'>
+              <h3 class='panel-title'><%= quote.attributed.name %></h3>
+            </div>
+            <div class='panel-body'>
+              <%= quote.quote %>
+              <br/>
+              <smaller>Added By: <%= quote.author.name %></smaller>
+            </div>
+            <div class='panel-footer'>
+              <%= link_to 'Edit', edit_quote_path(quote), :class => 'btn btn-default' %>
+              <%= link_to 'Delete', quote, :method => 'delete', :class => 'btn btn-danger', data: {confirm: "You will delete this record.  Are you sure?"} %>
+            </div>
+          </div>
+        </div>
     <% end %>
-  </ul>
+    </div>
+  <% end %>
 <% else %>
-  There are no quotes yet<br/>
+  <larger>There are no quotes yet</larger><br/>
 <% end %>
 
 
-<%= link_to 'New Quote', :new_quote, {:class => 'btn btn-primary'} %>
+<%= link_to 'New Quote', new_quote_path, :class => 'btn btn-primary' %>

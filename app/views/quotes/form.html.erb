@@ -1,0 +1,9 @@
+<h1>Add a new Quote</h1>
+
+<%= bootstrap_form_for (@quote) do |f| %>
+  <%= f.collection_select(:attributed_id, User.all, :id, :name, {:include_blank => true}) %>
+  <%= f.collection_select(:author_id, User.all, :id, :name, {:include_blank => true}) %>
+  <%= f.text_area :quote %>
+    
+  <%= render "layouts/form_submits", path: quotes_path, f: f %>
+<% end %>
