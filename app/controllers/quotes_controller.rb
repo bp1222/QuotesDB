@@ -1,4 +1,6 @@
 class QuotesController < ApplicationController
+  before_action :require_auth, except: [:index, :show]
+
   def index
     @quotes = Quote.order(attributed: :asc).page params[:page]
   end

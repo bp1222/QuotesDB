@@ -9,12 +9,6 @@ class UsersController < ApplicationController
     render 'form'
   end
 
-  def register
-    @user = User.new
-    @header = 'New Registration'
-    render 'form'
-  end
-
   def create
     @user = User.create user_params
     redirect_to users_path, {flash: {success: "Record has been created"}}
@@ -24,12 +18,6 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @header = @user.name 
     render 'form'
-  end
-
-  def show
-    @user = User.find params[:id]
-    @header = @user.name 
-    render 'form-ro'
   end
 
   def update
@@ -43,12 +31,12 @@ class UsersController < ApplicationController
 
   def destroy
     User.destroy params[:id]
-    redirect_to users_path, {flash: {info: "Record has been deleted"}}
+    redirect_to users_path, {flash: {notice: "Record has been deleted"}}
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :username, :password, :password_confirmation)
+    params.require(:user).permit(:name, :username, :password)
   end
 end

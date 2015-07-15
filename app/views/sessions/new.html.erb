@@ -1,0 +1,10 @@
+<h1>Login</h1>
+
+<%= bootstrap_form_tag url: '/login' do |f| %>
+    <%= f.text_field :username %>
+    <%= f.password_field :password %>
+
+    <%= f.form_group :class => 'btn-group' do %>
+  		<%= f.primary "Login" %>
+  	<% end %>
+<% end %>

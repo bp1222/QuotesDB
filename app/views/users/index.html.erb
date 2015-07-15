@@ -15,8 +15,12 @@
               Username: <%= user.username %>
             </div>
             <div class='panel-footer'>
+            <% if authorized? %>
               <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-default' %>
               <%= link_to 'Delete', user, :method => 'delete', :class => 'btn btn-danger', data: {confirm: "You will delete this record.  Are you sure?"} %>
+              <% else %>
+                 <%= link_to 'View', user_path(user), :class => 'btn btn-default' %>
+              <% end %>
             </div>
           </div>
         </div>
@@ -27,5 +31,6 @@
   <larger>There are no users yet</larger><br/>
 <% end %>
 
-
-<%= link_to 'New User', new_user_path, :class => 'btn btn-primary' %>
+<% if authorized? %>
+  <%= link_to 'New User', new_user_path, :class => 'btn btn-primary' %>
+<% end %>

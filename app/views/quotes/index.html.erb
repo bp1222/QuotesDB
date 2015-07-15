@@ -29,5 +29,6 @@
   <larger>There are no quotes yet</larger><br/>
 <% end %>
 
-
-<%= link_to 'New Quote', new_quote_path, :class => 'btn btn-primary' %>
+<% if authorized? %>
+  <%= link_to 'New Quote', new_quote_path, :class => 'btn btn-primary' %>
+<% end %>

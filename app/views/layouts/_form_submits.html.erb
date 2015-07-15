@@ -1,4 +1,6 @@
 <%= f.form_group :class => 'btn-group' do %>
-  <%= f.primary "Submit" %>
+  <% if authorized? %>
+  	<%= f.primary "Submit" %>
+  <% end %>
   <%= link_to "Cancel", path, :class => 'btn btn-default' %>
 <% end %>

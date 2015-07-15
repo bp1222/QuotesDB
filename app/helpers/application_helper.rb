@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def active_section (sec)
-    controller_name == sec ? 'active' : ''
-  end
+	def active_section (sec)
+		controller_name == sec ? 'active' : ''
+	end
 end
