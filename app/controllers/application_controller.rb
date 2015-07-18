@@ -19,4 +19,13 @@ class ApplicationController < ActionController::Base
     get_current_user != nil
   end
   helper_method :authorized?
+
+  def has_right?(has_right)
+    User.find(session[:user_id]).roles.any? { |role|
+      role.rights.any? { |right|
+        right.right_name == 'admin' || right.right_name = has_right
+      }
+    }
+  end
+  helper_method :has_right?
 end

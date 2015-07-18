@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :check_rights, except: [:index, :show]
+
   def index
     @users = User.order(username: :asc).page params[:page]
   end
@@ -29,7 +31,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find params[:id]
     @header = @user.name 
-    render 'form-ro'
   end
 
   def update
@@ -49,6 +50,13 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :username, :password, :password_confirmation)
+    params.require(:user).permit(:name, :username, :password, :password_confirmation, :role_ids => [])
+  end
+
+  def check_rights
+    unless has_right?("user_#{self.action_name}")
+      flash[:danger] = "You do not have rights for this action"
+      redirect_to users_path
+    end
   end
 end

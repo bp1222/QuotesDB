@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150711010849) do
+ActiveRecord::Schema.define(version: 20150718000702) do
 
   create_table "quotes", force: :cascade do |t|
     t.text     "quote"
@@ -24,6 +24,34 @@ ActiveRecord::Schema.define(version: 20150711010849) do
 
   add_index "quotes", ["attributed_id"], name: "index_quotes_on_attributed_id"
   add_index "quotes", ["author_id"], name: "index_quotes_on_author_id"
+
+  create_table "rights", force: :cascade do |t|
+    t.string   "right_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rights_roles", id: false, force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "right_id"
+  end
+
+  add_index "rights_roles", ["right_id"], name: "index_rights_roles_on_right_id"
+  add_index "rights_roles", ["role_id"], name: "index_rights_roles_on_role_id"
+
+  create_table "roles", force: :cascade do |t|
+    t.string   "role_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id"
+  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

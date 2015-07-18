@@ -15,11 +15,12 @@
               Username: <%= user.username %>
             </div>
             <div class='panel-footer'>
-            <% if authorized? %>
-              <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-default' %>
-              <%= link_to 'Delete', user, :method => 'delete', :class => 'btn btn-danger', data: {confirm: "You will delete this record.  Are you sure?"} %>
-              <% else %>
-                 <%= link_to 'View', user_path(user), :class => 'btn btn-default' %>
+              <%= link_to 'View', user_path(user), :class => 'btn btn-default' %>
+              <% if has_right?(:user_edit) %>
+                <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-default' %>
+              <% end %>
+              <% if has_right?(:user_delete) %>
+                  <%= link_to 'Delete', user, :method => 'delete', :class => 'btn btn-danger', data: {confirm: "You will delete this record.  Are you sure?"} %>
               <% end %>
             </div>
           </div>
@@ -31,6 +32,6 @@
   <larger>There are no users yet</larger><br/>
 <% end %>
 
-<% if authorized? %>
+<% if has_right?(:user_create) %>
   <%= link_to 'New User', new_user_path, :class => 'btn btn-primary' %>
 <% end %>

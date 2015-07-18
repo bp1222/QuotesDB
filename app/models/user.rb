@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
 
   has_many :quotes_attributed, class_name: 'Quote', foreign_key: 'attributed_id'
   has_many :quotes_authored, class_name: 'Quote', foreign_key: 'author_id'
+
+  has_and_belongs_to_many :roles
 end

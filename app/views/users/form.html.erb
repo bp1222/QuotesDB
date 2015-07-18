@@ -6,6 +6,10 @@
     <%= f.password_field :password %>
     <%= f.password_field :password_confirmation %>
 
+    <%= f.collection_check_boxes :role_ids, Role.all, :id, :role_name, {label: 'Roles', checked: @user.roles} %>
 
-    <%= render "layouts/form_submits", path: users_path, f: f %>
+  <% if has_right?(:user_create) %>
+    <%= f.primary "Submit" %>
+  <% end %>
+  <%= link_to "Cancel", users_path, :class => 'btn btn-default' %>
 <% end %>

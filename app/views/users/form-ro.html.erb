@@ -1,8 +1,0 @@
-<h1><%= @header %></h1>
-
-<%= bootstrap_form_for(@user) do |f| %>
-	<h3>Name: <small><%= @user.name %></small></h3>
-	<h3>Username: <small><%= @user.username %></small></h3>
-
-    <%= render "layouts/form_submits", path: users_path, f: f %>
-<% end %>
