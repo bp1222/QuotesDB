@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :authorized?
 
   def has_right?(has_right)
+    return false unless session[:user_id]
     User.find(session[:user_id]).roles.any? { |role|
       role.rights.any? { |right|
         right.right_name == 'admin' || right.right_name = has_right
