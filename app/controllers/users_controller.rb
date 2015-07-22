@@ -1,62 +1,46 @@
 class UsersController < ApplicationController
-  before_action :check_rights, except: [:index, :show]
-
   def index
     @users = User.order(username: :asc).page params[:page]
   end
 
-  def new
-    @user = User.new
-    @header = 'New User'
-    render 'form'
-  end
-
   def register
     @user = User.new
-    @header = 'New Registration'
-    render 'form'
   end
 
   def create
-    @user = User.create user_params
-    redirect_to users_path, {flash: {success: "Record has been created"}}
-  end
+    require 'securerandom'
+    @user = User.new user_params
+    @user.auth_code = SecureRandom.hex(32)
 
-  def edit
-    @user = User.find params[:id]
-    @header = @user.name 
-    render 'form'
-  end
-
-  def show
-    @user = User.find params[:id]
-    @header = @user.name 
-  end
-
-  def update
-    @user = User.find params[:id]
-    if @user.update_attributes user_params
-      redirect_to users_path
+    if @user.save
+      UserMailer.new_user_registration(@user).deliver_now
+      redirect_to users_path, {flash: {success: "An email has been sent to you to verify your account"}}
     else
-      render 'form'
+      render 'register'
     end
   end
 
-  def destroy
-    User.destroy params[:id]
-    redirect_to users_path, {flash: {info: "Record has been deleted"}}
+  def verify
+    @user = User.find_by(auth_code: params[:auth_code])
+    if @user
+      @user.account_verified = true
+
+      if @user.save
+        flash[:success] = 'You have successfully verified your account and my now login'
+        redirect_to root_path
+      else
+        flash[:notice] = 'We found your account to authorize, but were unable to authorize at this time'
+        redirect_to root_path
+      end
+    else
+      flash[:danger] = 'Could not verify your account'
+      redirect_to root_path
+    end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :username, :password, :password_confirmation, :role_ids => [])
-  end
-
-  def check_rights
-    unless has_right?("user_#{self.action_name}")
-      flash[:danger] = "You do not have rights for this action"
-      redirect_to users_path
-    end
+    params.require(:user).permit(:name, :username, :email, :password, :password_confirmation)
   end
 end

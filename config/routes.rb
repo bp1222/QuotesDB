@@ -20,9 +20,15 @@ Rails.application.routes.draw do
 
   get '/register' => 'users#register'
   post '/register' => 'users#create'
+  get '/verify' => 'users#verify'
 
   resources :quotes
-  resources :users
+  resources :users, only: [:index]
+
+   namespace :admin do
+    resources :users
+    resources :roles
+  end
 
   # Example resource route with options:
   #   resources :products do

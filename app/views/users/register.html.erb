@@ -1,0 +1,12 @@
+<h1>New Registration</h1>
+
+<%= bootstrap_form_for @user, url: { action: 'register' } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :username %>
+  <%= f.email_field :email %>
+  <%= f.password_field :password %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.primary "Submit" %>
+  <%= link_to "Cancel", users_path, :class => 'btn btn-default' %>
+<% end %>

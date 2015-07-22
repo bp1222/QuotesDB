@@ -1,4 +1,4 @@
-<h1>Users</h1>
+<h1>ADMIN Users</h1>
 
 <%= paginate @users %>
 
@@ -15,6 +15,13 @@
               Username: <%= user.username %>
             </div>
             <div class='panel-footer'>
+              <%= link_to 'View', user_path(user), :class => 'btn btn-default' %>
+              <% if has_right?(:user_edit) %>
+                <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-default' %>
+              <% end %>
+              <% if has_right?(:user_delete) %>
+                  <%= link_to 'Delete', user, :method => 'delete', :class => 'btn btn-danger', data: {confirm: "You will delete this record.  Are you sure?"} %>
+              <% end %>
             </div>
           </div>
         </div>
